@@ -4,6 +4,7 @@ import torch
 import tqdm
 import PIL.Image
 import numpy as np
+import os
 
 
 def display_sample(sample, i):
@@ -12,8 +13,14 @@ def display_sample(sample, i):
     image_processed = image_processed.numpy().astype(np.uint8)
 
     image_pil = PIL.Image.fromarray(image_processed[0])
-    # display(f"Image at step {i}")
-    # display(image_pil)
+    
+    # 创建输出文件夹（如果不存在）
+    output_dir = "generated_images"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 保存图像
+    image_path = os.path.join(output_dir, f"image_step_{i:04d}.png")
+    image_pil.save(image_path)
 
 torch.manual_seed(0)
 
